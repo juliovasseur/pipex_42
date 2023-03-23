@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 15:23:08 by jvasseur          #+#    #+#             */
+/*   Updated: 2023/03/23 15:23:23 by jvasseur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
-
 
 # include"../Libft/libft.h"
 
@@ -29,11 +39,11 @@ typedef struct s_pipex
 	char	*env_path;
 }		t_pipex;
 
-
 				/*OPEN_FILES_BONUS.C*/
 
 void	get_fd_infile(char **argv, t_pipex *pipex);
 void	get_fd_outfile(char *argv, t_pipex *pipex);
+int		verif_all_and_get_file(int argc, char **argv, t_pipex *pipex);
 
 				/*PIPEX_BONUS.C*/
 
@@ -57,11 +67,8 @@ void	here_doc(char *argv);
 
 				/*MSG_ERROR_BONUS.C*/
 
-void	msg_error(char *err);
+void	msg_send_error(char *err);
 void	msg_pipe(char *arg);
 int		msg(char *err);
-
-
-
 
 #endif

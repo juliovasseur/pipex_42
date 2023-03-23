@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msg_error_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:55 by jules             #+#    #+#             */
-/*   Updated: 2023/03/22 15:58:57 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/23 14:19:26 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	msg_pipe(char *arg)
 	write(2, "\n", 1);
 }
 
-void	msg_error(char *err)
+void	msg_send_error(char *err)
 {
 	perror(err);
 	exit (1);

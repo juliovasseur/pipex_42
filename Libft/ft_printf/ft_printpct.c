@@ -6,14 +6,14 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:26:10 by jvasseur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:31:37 by jvasseur         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:00:33 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_printpct(void)
+int	ft_printpct(void)
 {
-    write(1, "%", 1);
-    return(1);
+	write(1, "%", 1);
+	return (1);
 }

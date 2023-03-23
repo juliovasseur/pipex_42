@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:36 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 11:27:50 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/23 15:18:09 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/pipex_bonus.h"
-
 
 void	parent_free(t_pipex *pipex)
 {
@@ -48,7 +46,6 @@ void	child_free(t_pipex *pipex)
 	}
 	free(pipex->tab_paths);
 	free(pipex->tab_cmd);
-	free(pipex->cmd);
 }
 
 void	pipe_free(t_pipex *pipex)
@@ -56,6 +53,7 @@ void	pipe_free(t_pipex *pipex)
 	close(pipex->infile);
 	close(pipex->outfile);
 	free(pipex->pipe);
+	free(pipex);
 	msg("ERR_ENVP");
 	exit(1);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jules <jules@student.42.fr>                +#+  +:+       +#+         #
+#    By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 17:09:26 by jvasseur          #+#    #+#              #
-#    Updated: 2023/03/11 02:22:48 by jules            ###   ########.fr        #
+#    Updated: 2023/03/23 14:59:56 by jvasseur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = pipex
 
 NAME_BONUS = pipex_bonus
 
-SRC = src/pipex.c src/send_error.c src/program.c
+SRC = src/pipex.c src/send_error_and_free.c src/program.c
 
 SRC_BONUS = src_bonus/child_bonus.c src_bonus/msg_error_bonus.c src_bonus/open_files_bonus.c src_bonus/free_bonus.c src_bonus/here_doc_bonus.c src_bonus/pipex_bonus.c
 

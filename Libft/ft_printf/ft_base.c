@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printadress.c                                   :+:      :+:    :+:   */
+/*   ft_base.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 17:02:39 by jvasseur          #+#    #+#             */
-/*   Updated: 2022/10/20 17:23:02 by jvasseur         ###   ########.fr       */
+/*   Created: 2022/10/20 15:22:05 by jvasseur          #+#    #+#             */
+/*   Updated: 2022/11/28 15:00:30 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 int	check(char *base)
 {
@@ -34,46 +36,26 @@ int	check(char *base)
 	return (1);
 }
 
-void	check2(void)
+int	ft_base(unsigned int nbr, char *base)
 {
-	write(1, "2147483648", 10);
-}
+	long int	nbtemp;
+	long int	i;
+	int			ct;
 
-int	ft_putnbr_base(long long int nbr, char *base, int cpt)
-{
-	long long int	nbtemp;
-	long long int	i;
-
+	ct = 0;
 	i = 0;
 	if (check(base) == 0)
-		return (1);
+		return (0);
 	nbtemp = 0;
-	if (nbr < 0)
-	{
-		ft_putchar('-');
-		if (nbr == -2147483648)
-			check2();
-		else
-			nbr = -nbr;
-	}
 	while (base[i])
 		i++;
 	if (nbr < i)
-        cpt += ft_putchar(base[nbr % i]);
+		ct += ft_putchar(base[nbr % i]);
 	else
 	{
-		cpt += ft_putnbr_base(nbr / i, base, cpt);
+		ct += ft_base(nbr / i, base);
 		nbtemp = nbr % i;
-		ft_putchar(base[nbtemp]);
+		ct += ft_putchar(base[nbtemp]);
 	}
-	return (cpt);
-}
-
-
-
-
-ft_printaddress(long long int nbr, char *base, int cpt)
-{
-    cpt += write(1, "0x", 2);
-    cpt += ft_putnbr_base(nbr, base, cpt);
+	return (ct);
 }

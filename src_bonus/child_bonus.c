@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   child_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:41 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 11:26:22 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/23 15:11:13 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../include/pipex_bonus.h"
 
-static char	*get_cmd(char **paths, char *cmd)
+char	*get_cmd(char **path, char *command)
 {
-	char	*command;
 	int		i;
+	char	*cmd;
 
 	i = 0;
-	while (paths[i])
+	while (path[i])
 	{
-		command = ft_strjoin(paths[i], cmd);
-		if (access(command, 0) == 0)
-			return (command);
-		free(command);
+		cmd = ft_strjoin(path[i], command);
+		if (access(cmd, 0) == 0)
+			return (cmd);
+		free(cmd);
 		i++;
 	}
 	return (NULL);
@@ -54,9 +52,9 @@ void	child(t_pipex *pipex, char **argv, char **envp)
 		pipex->cmd = get_cmd(pipex->tab_paths, pipex->tab_cmd[0]);
 		if (!pipex->cmd)
 		{
-			msg_pipe(pipex->tab_cmd[0]);
 			child_free(pipex);
 			free(pipex);
+			msg_pipe(pipex->tab_cmd[0]);
 			exit(1);
 		}
 		execve(pipex->cmd, pipex->tab_cmd, envp);

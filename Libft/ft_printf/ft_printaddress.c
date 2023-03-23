@@ -6,7 +6,7 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:08:49 by jvasseur          #+#    #+#             */
-/*   Updated: 2022/11/02 17:01:54 by jvasseur         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:00:30 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	check2(char *base)
 
 int	ft_putnbr_base2(unsigned long nbr, char *base)
 {
-	long int nbtemp;
-	unsigned long i;
-	int ct;
+	long int		nbtemp;
+	unsigned long	i;
+	int				ct;
 
 	ct = 0;
 	i = 0;
@@ -63,17 +63,17 @@ int	ft_putnbr_base2(unsigned long nbr, char *base)
 
 int	ft_printaddress(void *nb)
 {
-    int ct;
-    unsigned long long nbr;
+	int					ct;
+	unsigned long long	nbr;
 
-    ct = 0;
-    nbr = (unsigned long long) nb;
-	if ( nbr == 0)
-        ct += write(1, "(nil)" , 5);
-    else 
-    {
-        ct += write(1, "0x", 2);
-        ct += ft_putnbr_base2(nbr, "0123456789abcdef");
-    }
+	ct = 0;
+	nbr = (unsigned long long) nb;
+	if (nbr == 0)
+		ct += write(1, "(nil)", 5);
+	else
+	{
+		ct += write(1, "0x", 2);
+		ct += ft_putnbr_base2(nbr, "0123456789abcdef");
+	}
 	return (ct);
 }

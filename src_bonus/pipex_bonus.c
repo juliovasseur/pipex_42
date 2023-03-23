@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:59:05 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 11:23:28 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/23 15:20:50 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*find_path(char **envp)
 	return (*envp + 5);
 }
 
-void add_cmd_slash(char **paths)
+void	add_cmd_slash(char **paths)
 {
 	int		i;
 	char	*tmp;
@@ -49,13 +49,8 @@ int	main(int argc, char *argv[], char *envp[])
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
 		return (0);
-	if (argc < here_doc_or_not(argv[1], pipex))
-	{
-		return (msg("ERR_INPUT"));
-		free(pipex);
-	}
-	get_fd_infile(argv, pipex);
-	get_fd_outfile(argv[argc - 1], pipex);
+	if (verif_all_and_get_file(argc, argv, pipex) == 0)
+		return (2);
 	pipex->nb_cmd = argc - 3 - pipex->here_doc;
 	pipex->env_path = find_path(envp);
 	pipex->tab_paths = ft_split(pipex->env_path, ':');

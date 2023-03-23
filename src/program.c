@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:26:41 by jules             #+#    #+#             */
-/*   Updated: 2023/03/12 03:20:40 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/23 14:55:57 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	child_free(t_pipex *pipex)
 
 char	*cmd(char **path, char *command)
 {
-    int     i;
+	int		i;
 	char	*cmd;
 
-    i = 0;
+	i = 0;
 	while (path[i])
 	{
 		cmd = ft_strjoin(path[i], command);
-        if (access(cmd, 0) == 0)
+		if (access(cmd, 0) == 0)
 			return (cmd);
 		free(cmd);
 		i++;
@@ -43,16 +43,18 @@ char	*cmd(char **path, char *command)
 	return (NULL);
 }
 
-void    child_prog(t_pipex *pipex, char **argv, char **envp)
+void	child_prog(t_pipex *pipex, char **argv, char **envp)
 {
 	dup2(pipex->tube[1], STDOUT_FILENO);
 	dup2(pipex->file_input, STDIN_FILENO);
-    pipex->arg_cmd = ft_split(argv[2], ' ');
+	pipex->arg_cmd = ft_split(argv[2], ' ');
 	pipex->cmd = cmd(pipex->tab_path, pipex->arg_cmd[0]);
 	if (!pipex->cmd)
 	{
 		child_free(pipex);
 		close(pipex->tube[0]);
+		free_all(pipex);
+		free(pipex);
 		msg_write_error("Error cmd");
 		exit(1);
 	}
@@ -64,12 +66,14 @@ void	second_child_prog(t_pipex *pipex, char **argv, char **envp)
 {
 	dup2(pipex->tube[0], STDIN_FILENO);
 	dup2(pipex->file_output, STDOUT_FILENO);
-    pipex->arg_cmd = ft_split(argv[3], ' ');
+	pipex->arg_cmd = ft_split(argv[3], ' ');
 	pipex->cmd = cmd(pipex->tab_path, pipex->arg_cmd[0]);
 	if (!pipex->cmd)
 	{
 		child_free(pipex);
 		close(pipex->tube[1]);
+		free_all(pipex);
+		free(pipex);
 		msg_write_error("Error cmd");
 		exit(1);
 	}
