@@ -1,7 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 15:59:05 by jules             #+#    #+#             */
+/*   Updated: 2023/03/23 11:23:28 by jules            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
-
 
 void	close_all_pipes(t_pipex *pipex)
 {
@@ -18,10 +27,10 @@ char	*find_path(char **envp)
 	return (*envp + 5);
 }
 
-char	**add_cmd_slash(char **paths)
+void add_cmd_slash(char **paths)
 {
-	int 	i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (paths[i])
@@ -31,7 +40,6 @@ char	**add_cmd_slash(char **paths)
 		free(tmp);
 		i++;
 	}
-	return (paths);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -39,6 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	*pipex;
 
 	pipex = malloc(sizeof(t_pipex));
+	if (!pipex)
+		return (0);
 	if (argc < here_doc_or_not(argv[1], pipex))
 	{
 		return (msg("ERR_INPUT"));
@@ -51,7 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 	pipex->tab_paths = ft_split(pipex->env_path, ':');
 	if (!pipex->tab_paths)
 		pipe_free(pipex);
-	pipex->tab_paths = add_cmd_slash(pipex->tab_paths);
+	add_cmd_slash(pipex->tab_paths);
 	pipe(pipex->pipe[0]);
 	pipe(pipex->pipe[1]);
 	pipex->idx = 0;

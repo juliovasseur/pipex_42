@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 15:58:46 by jules             #+#    #+#             */
+/*   Updated: 2023/03/23 08:53:16 by jules            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
 
@@ -13,4 +24,21 @@ int	here_doc_or_not(char *arg, t_pipex *pipex)
 		pipex->here_doc = 0;
 		return (5);
 	}
+}
+
+void	here_doc(char *argv)
+{
+	char	*str;
+
+	str = get_next_line(0);
+	while (1)
+	{
+		if (str <= 0)
+			break ;
+		if (strncmp(argv, str, ft_strlen(argv)) == 0)
+			break ;
+		free(str);
+		str = get_next_line(0);
+	}
+	free(str);
 }

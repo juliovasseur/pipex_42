@@ -53,6 +53,7 @@ void	pipe_free(t_pipex *pipex);
 				/*HERE_DOC_BONUS.C*/
 
 int		here_doc_or_not(char *arg, t_pipex *pipex);
+void	here_doc(char *argv);
 
 				/*MSG_ERROR_BONUS.C*/
 
