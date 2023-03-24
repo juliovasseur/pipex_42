@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   child_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:41 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:11:13 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:26:24 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
 
-char	*get_cmd(char **path, char *command)
+static char	*get_cmd(char **path, char *command)
 {
 	int		i;
 	char	*cmd;
@@ -52,10 +52,10 @@ void	child(t_pipex *pipex, char **argv, char **envp)
 		pipex->cmd = get_cmd(pipex->tab_paths, pipex->tab_cmd[0]);
 		if (!pipex->cmd)
 		{
+			msg_pipe(pipex->tab_cmd[0]);
 			child_free(pipex);
 			free(pipex);
-			msg_pipe(pipex->tab_cmd[0]);
-			exit(1);
+			exit(2);
 		}
 		execve(pipex->cmd, pipex->tab_cmd, envp);
 	}

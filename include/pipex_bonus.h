@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:23:08 by jvasseur          #+#    #+#             */
-/*   Updated: 2023/03/23 15:23:23 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:03:49 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_pipex
 	int		nb_cmd;
 	int		idx;
 	int		pipe[2][2];
+	int		tube[2];
 	int		infile;
 	int		outfile;
 	int		here_doc;
@@ -63,7 +64,7 @@ void	pipe_free(t_pipex *pipex);
 				/*HERE_DOC_BONUS.C*/
 
 int		here_doc_or_not(char *arg, t_pipex *pipex);
-void	here_doc(char *argv);
+void	here_doc(t_pipex *pipex, char *argv);
 
 				/*MSG_ERROR_BONUS.C*/
 

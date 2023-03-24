@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msg_error_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:55 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 14:19:26 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:53:49 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	msg(char *err)
 void	msg_pipe(char *arg)
 {
 	write(2, "ERR_CMD", ft_strlen("ERR_CMD"));
-	write(2, arg, ft_strlen(arg));
+	if (arg != NULL)
+		write(2, arg, ft_strlen(arg));
 	write(2, "\n", 1);
 }
 

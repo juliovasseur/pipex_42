@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:59:00 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:21:01 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:20:46 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	get_fd_infile(char **argv, t_pipex *pipex)
 {
 	if (!ft_strncmp("here_doc", argv[1], 9))
-		here_doc(argv[2]);
+	{
+		here_doc(pipex, argv[2]);
+		pipex->infile = pipex->tube[0];
+	}
 	else
 	{
 		pipex->infile = open(argv[1], O_RDONLY);

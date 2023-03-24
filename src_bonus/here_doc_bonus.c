@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:46 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:11:23 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:37:06 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	here_doc_or_not(char *arg, t_pipex *pipex)
 {
-	if (arg && !ft_strncmp("here_doc", arg, 9))
+	if (arg && !ft_strncmp("here_doc", arg, 8))
 	{
 		pipex->here_doc = 1;
 		return (6);
@@ -26,19 +26,21 @@ int	here_doc_or_not(char *arg, t_pipex *pipex)
 	}
 }
 
-void	here_doc(char *argv)
+void	here_doc(t_pipex *pipex, char *argv)
 {
 	char	*str;
 
-	str = get_next_line(0);
+	pipe(pipex->tube);
 	while (1)
 	{
-		if (str <= 0)
-			break ;
-		if (strncmp(argv, str, ft_strlen(argv)) == 0)
-			break ;
-		free(str);
 		str = get_next_line(0);
+		if (str == NULL)
+			break ;
+		if ((ft_strncmp(argv, str, ft_strlen(argv)) == 0))
+			break ;
+		ft_putstr_fd(str, pipex->tube[1]);
+		free(str);
 	}
 	free(str);
+	close(pipex->tube[0]);
 }

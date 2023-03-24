@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = ftgetnextline(buf);
 	buf = ft_takeline(buf);
-	if (buf == NULL)
+	if (buf == NULL || buf[0] == '\0')
 	{
 		free(buf);
 		buf = NULL;
