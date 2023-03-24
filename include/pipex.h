@@ -6,7 +6,7 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 04:51:13 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:22:49 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:35:23 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	child_prog(t_pipex *pipex, char **argv, char **envp);
 void	second_child_prog(t_pipex *pipex, char **argv, char **envp);
 void	free_all(t_pipex *pipex);
 int		open_file_and_verif(t_pipex *pipex, char **argv);
+void	close_pipes(t_pipex *pipex);
 
 #endif

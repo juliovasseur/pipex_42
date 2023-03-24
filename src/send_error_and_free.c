@@ -6,7 +6,7 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 04:35:00 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:09:17 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:26:54 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	free_all(t_pipex *pipex)
 		i++;
 	}
 	free(pipex->tab_path);
-	free(pipex);
 }
 
 int	verif_argv(char **argv)
@@ -57,13 +56,13 @@ int	open_file_and_verif(t_pipex *pipex, char **argv)
 {
 	if (!pipex)
 		return (0);
-	pipex->file_input = open(argv[1], O_RDONLY);
 	if (verif_argv(argv) == 0)
 	{
 		free(pipex);
 		msg_write_error("ERR_ARG");
 		return (0);
 	}
+	pipex->file_input = open(argv[1], O_RDONLY);
 	if (pipex->file_input == -1)
 	{
 		free(pipex);

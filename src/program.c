@@ -6,7 +6,7 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:26:41 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 14:55:57 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:38:26 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,19 @@ void	child_prog(t_pipex *pipex, char **argv, char **envp)
 	dup2(pipex->tube[1], STDOUT_FILENO);
 	dup2(pipex->file_input, STDIN_FILENO);
 	pipex->arg_cmd = ft_split(argv[2], ' ');
+	close(pipex->tube[0]);
 	pipex->cmd = cmd(pipex->tab_path, pipex->arg_cmd[0]);
 	if (!pipex->cmd)
 	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close_pipes(pipex);
 		child_free(pipex);
-		close(pipex->tube[0]);
 		free_all(pipex);
 		free(pipex);
-		msg_write_error("Error cmd");
+		msg_write_error("Error first cmd");
 		exit(1);
 	}
-	close(pipex->tube[0]);
 	execve(pipex->cmd, pipex->arg_cmd, envp);
 }
 
@@ -67,16 +69,18 @@ void	second_child_prog(t_pipex *pipex, char **argv, char **envp)
 	dup2(pipex->tube[0], STDIN_FILENO);
 	dup2(pipex->file_output, STDOUT_FILENO);
 	pipex->arg_cmd = ft_split(argv[3], ' ');
+	close(pipex->tube[1]);
 	pipex->cmd = cmd(pipex->tab_path, pipex->arg_cmd[0]);
 	if (!pipex->cmd)
 	{
-		child_free(pipex);
-		close(pipex->tube[1]);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close_pipes(pipex);
+		child_free(pipex);	
 		free_all(pipex);
 		free(pipex);
-		msg_write_error("Error cmd");
+		msg_write_error("Error second cmd");
 		exit(1);
 	}
-	close(pipex->tube[1]);
 	execve(pipex->cmd, pipex->arg_cmd, envp);
 }

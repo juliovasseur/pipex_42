@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:58:46 by jules             #+#    #+#             */
-/*   Updated: 2023/03/24 11:37:06 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:44:22 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void	here_doc(t_pipex *pipex, char *argv)
 		free(str);
 	}
 	free(str);
-	close(pipex->tube[0]);
+	close(pipex->tube[1]);
 }

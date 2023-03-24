@@ -6,7 +6,7 @@
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 04:32:59 by jules             #+#    #+#             */
-/*   Updated: 2023/03/23 15:09:10 by jvasseur         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:27:59 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int	main(int argc, char **argv, char **envp)
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 	free_all(pipex);
+	free(pipex);
 	return (0);
 }
