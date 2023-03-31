@@ -5,67 +5,103 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 04:32:59 by jules             #+#    #+#             */
-/*   Updated: 2023/03/24 15:27:59 by jvasseur         ###   ########.fr       */
+/*   Created: 2023/03/22 15:59:05 by jules             #+#    #+#             */
+/*   Updated: 2023/03/31 18:20:11 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	add_cmd_slash(char **paths)
+static void	tab_wait(t_pipex *pipex)
 {
-	int		i;
-	char	*tmp;
+	int	i;
 
 	i = 0;
-	while (paths[i])
-	{
-		tmp = paths[i];
-		paths[i] = ft_strjoin(tmp, "/");
-		free(tmp);
+	if (pipex->infile == -1)
 		i++;
+	if (pipex->outfile == -1)
+		i++;
+	pipex->tab_wait = malloc(sizeof(int) * (pipex->nb_cmd - i));
+}
+
+static void	wait_tab(t_pipex *pipex)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	if (pipex->infile == -1)
+		j++;
+	if (pipex->outfile == -1)
+		j++;
+	i = 0;
+	while (i < pipex->nb_cmd - j)
+	{
+		waitpid(pipex->tab_wait[i], NULL, 0);
+		i++;
+	}
+	free(pipex->tab_wait);
+}
+
+static void	exec_child(t_pipex *pipex, char **argv, char **envp)
+{
+	if (pipex->outfile == -1)
+	{
+		while ((pipex->idx) < pipex->nb_cmd - 1)
+		{
+			child(pipex, argv, envp);
+			pipex->idx++;
+		}
+	}
+	else
+	{
+		while ((pipex->idx) < pipex->nb_cmd)
+		{
+			child(pipex, argv, envp);
+			pipex->idx++;
+		}
 	}
 }
 
-char	*find_path(char **envp)
+static void	verif_path(t_pipex *pipex, char **envp)
 {
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	return (*envp + 5);
+	pipex->env_path = find_path(envp);
+	if (!pipex->env_path)
+	{
+		pipex->tab_paths = NULL;
+		pipex->idx_path = 0;
+		msg("ERR INVALID PATH");
+	}
+	else
+	{
+		pipex->idx_path = 1;
+		pipex->tab_paths = ft_split(pipex->env_path, ':');
+		if (!pipex->tab_paths)
+			pipe_free(pipex);
+		add_cmd_slash(pipex->tab_paths, pipex);
+	}
 }
 
-void	close_pipes(t_pipex *pipex)
+int	main(int argc, char *argv[], char *envp[])
 {
-	close(pipex->tube[0]);
-	close(pipex->tube[1]);
-}
+	t_pipex	*pipex;
 
-int	main(int argc, char **argv, char **envp)
-{
-	pid_t		pid1;
-	pid_t		pid2;
-	t_pipex		*pipex;
-
-	if (argc != 5)
-		return (msg_write_error("Error input, number arguments invalid"));
 	pipex = malloc(sizeof(t_pipex));
-	if (open_file_and_verif(pipex, argv) == 0)
-		return (2);
-	if (pipe(pipex->tube) == -1)
-		msg_send_error("Error pipe");
-	pipex->path = find_path(envp);
-	pipex->tab_path = ft_split(pipex->path, ':');
-	add_cmd_slash(pipex->tab_path);
-	pid1 = fork();
-	if (pid1 == 0)
-		child_prog(pipex, argv, envp);
-	pid2 = fork();
-	if (pid2 == 0)
-		second_child_prog(pipex, argv, envp);
-	close_pipes(pipex);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
-	free_all(pipex);
-	free(pipex);
+	if (!pipex)
+		return (0);
+	if (verif_all_and_get_file(argc, pipex) == 0)
+		return (0);
+	pipex->nb_cmd = argc - 3;
+	verif_path(pipex, envp);
+	pipe(pipex->pipe[0]);
+	pipe(pipex->pipe[1]);
+	get_fd_infile(argv, pipex);
+	get_fd_outfile(argv[argc - 1], pipex);
+	tab_wait(pipex);
+	pipex->tmp_tab = 0;
+	exec_child(pipex, argv, envp);
+	close_all_pipes(pipex);
+	wait_tab(pipex);
+	parent_free(pipex);
 	return (0);
 }

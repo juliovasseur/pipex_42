@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msg_error_bonus.c                                  :+:      :+:    :+:   */
+/*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:58:55 by jules             #+#    #+#             */
-/*   Updated: 2023/03/28 13:40:36 by jvasseur         ###   ########.fr       */
+/*   Created: 2023/03/22 15:59:00 by jules             #+#    #+#             */
+/*   Updated: 2023/03/31 18:13:04 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/pipex.h"
 
-int	msg(char *err)
+void	get_fd_infile(char **argv, t_pipex *pipex)
 {
-	write(2, err, ft_strlen(err));
-	write(2, "\n", 1);
-	return (1);
+	pipex->idx = 0;
+	pipex->infile = open(argv[1], O_RDONLY);
+	if (pipex->infile == -1)
+	{
+		pipex->idx = 1;
+		perror("ERR_INFILE");
+	}
 }
 
-void	msg_pipe(void)
+void	get_fd_outfile(char *argv, t_pipex *pipex)
 {
-	write(2, "ERROR_CMD", ft_strlen("ERROR_CMD"));
-	write(2, "\n", 1);
-}
-
-void	msg_send_error(char *err)
-{
-	perror(err);
-	exit(1);
+	pipex->outfile = open(argv, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (pipex->outfile == -1)
+		perror("ERR_OUTFILE");
 }

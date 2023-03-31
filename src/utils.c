@@ -1,32 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msg_error_bonus.c                                  :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:58:55 by jules             #+#    #+#             */
-/*   Updated: 2023/03/28 13:40:36 by jvasseur         ###   ########.fr       */
+/*   Created: 2023/03/31 18:12:44 by jvasseur          #+#    #+#             */
+/*   Updated: 2023/03/31 18:38:36 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/pipex.h"
 
-int	msg(char *err)
+int	verif_all_and_get_file(int argc, t_pipex *pipex)
 {
-	write(2, err, ft_strlen(err));
-	write(2, "\n", 1);
+	if (argc != 5)
+	{
+		free(pipex);
+		msg("ERR_INPUT");
+		return (0);
+	}
 	return (1);
 }
 
-void	msg_pipe(void)
+int	verif_argv(char *argv)
 {
-	write(2, "ERROR_CMD", ft_strlen("ERROR_CMD"));
-	write(2, "\n", 1);
+	int	j;
+	int	k;
+
+	k = 0;
+	j = 0;
+	while (argv[j])
+	{
+		if (argv[j] != 32 && argv[j] != '\t')
+			k++;
+		j++;
+	}
+	if (k == 0)
+		return (0);
+	return (1);
 }
 
-void	msg_send_error(char *err)
+void	double_dup2(int zero, int first)
 {
-	perror(err);
-	exit(1);
+	dup2(zero, 0);
+	dup2(first, 1);
 }

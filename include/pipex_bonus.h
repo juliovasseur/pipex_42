@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:23:08 by jvasseur          #+#    #+#             */
-/*   Updated: 2023/03/24 11:03:49 by jules            ###   ########.fr       */
+/*   Updated: 2023/03/31 15:36:59 by jvasseur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ typedef struct s_pipex
 	int		idx;
 	int		pipe[2][2];
 	int		tube[2];
+	int		idx_path;
+	int 	*tab_wait;
+	int 	tmp_tab;
 	int		infile;
 	int		outfile;
 	int		here_doc;
@@ -69,7 +72,7 @@ void	here_doc(t_pipex *pipex, char *argv);
 				/*MSG_ERROR_BONUS.C*/
 
 void	msg_send_error(char *err);
-void	msg_pipe(char *arg);
+void	msg_pipe(void);
 int		msg(char *err);
 
 #endif

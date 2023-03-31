@@ -6,7 +6,7 @@
 #    By: jvasseur <jvasseur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 17:09:26 by jvasseur          #+#    #+#              #
-#    Updated: 2023/03/24 14:42:58 by jvasseur         ###   ########.fr        #
+#    Updated: 2023/03/31 18:14:42 by jvasseur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = pipex
 
 NAME_BONUS = pipex
 
-SRC = src/pipex.c src/send_error_and_free.c src/program.c
+SRC = src/child.c src/msg_error.c src/open_files.c src/free.c src/pipex.c src/get_path.c src/help_free.c src/utils.c
 
 SRC_BONUS = src_bonus/child_bonus.c src_bonus/msg_error_bonus.c src_bonus/open_files_bonus.c src_bonus/free_bonus.c src_bonus/here_doc_bonus.c src_bonus/pipex_bonus.c
 
